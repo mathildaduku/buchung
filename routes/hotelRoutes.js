@@ -8,6 +8,6 @@ router
   .get(hotelController.getAllHotels)
   .post(hotelController.createHotel);
 
-router.route('/:id').get(hotelController.getHotel);
+router.route('/:id').get(hotelController.getHotel).patch(hotelController.updateHotel)
 
 module.exports = router;

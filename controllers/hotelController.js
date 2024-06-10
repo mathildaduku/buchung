@@ -56,5 +56,26 @@ exports.getHotel = async (req, res) => {
     }
 }
 
+exports.updateHotel = async (req, res) => {
+    try {
+        const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        })
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                hotel
+            }
+        })
+    } catch (err) {
+        res.status(404).json({
+          status: 'fail',
+          message: err.message,
+        });
+    }
+}
+
 
 exports.updateHotel 
