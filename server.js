@@ -10,10 +10,7 @@ const DB = process.env.DATABASE.replace(
 );
 
 // connect to database
-mongoose
-  .connect(DB, {
-  })
-  .then(() => console.log('DB connection successful!'));
+mongoose.connect(DB, {}).then(() => console.log('DB connection successful!'));
 
 // start app server
 const port = process.env.PORT || 3000;

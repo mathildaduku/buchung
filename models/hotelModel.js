@@ -29,7 +29,7 @@ const hotelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-//   rooms: [RoomSchema],
+  //   rooms: [RoomSchema],
 });
 
 // create model from schema
