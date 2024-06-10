@@ -36,3 +36,25 @@ exports.getAllHotels = async (req, res) => {
     });
   }
 };
+
+exports.getHotel = async (req, res) => {
+    try {
+        const hotel = await Hotel.findById(req.params.id)
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                hotel
+            }
+        })
+    }
+    catch(err) {
+        res.status(404).json({
+            status: 'fail',
+            message: err.message
+        })
+    }
+}
+
+
+exports.updateHotel 
