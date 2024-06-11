@@ -1,4 +1,5 @@
 const Hotel = require('../models/hotelModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.createHotel = async (req, res) => {
   try {
@@ -20,7 +21,12 @@ exports.createHotel = async (req, res) => {
 
 exports.getAllHotels = async (req, res) => {
   try {
-    const hotels = await Hotel.find();
+    const features = new APIFeatures(Hotel.find(), req.query)
+      .filter()
+      .sort()
+      .selectFields()
+      .paginate();
+    const hotels = await features.query;
 
     res.status(200).json({
       status: 'success',
