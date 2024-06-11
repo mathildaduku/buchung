@@ -6,6 +6,7 @@ const hotelSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please provide a name for the hotel.'],
+    unique: true,
     trim: true,
   },
   description: {
