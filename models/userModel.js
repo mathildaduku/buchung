@@ -42,7 +42,7 @@ userSchema.pre('save', async function (next) {
     // if the current document's password has not modified, exit the function and call the next middleware
     if (!this.isModified('password')) return next();
 
-    this.password = await bcrypt.hash(this.password, 12);;
+    this.password = await bcrypt.hash(this.password, 12);
 
     // remove passwordConfirm field from database
     this.passwordConfirm = undefined;
