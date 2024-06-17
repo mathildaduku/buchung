@@ -35,6 +35,9 @@ exports.getHotel = catchAsync(async (req, res) => {
   
     const hotel = await Hotel.findById(req.params.id);
 
+    if (!hotel) {
+      return next(new AppError('No hotel found with that ID', 404))
+    }
     res.status(200).json({
       status: 'success',
       data: {
@@ -50,6 +53,9 @@ exports.updateHotel = catchAsync(async (req, res) => {
       runValidators: true,
     });
 
+    if (!hotel) {
+      return next(new AppError('No hotel found with that ID', 404))
+    }
     res.status(200).json({
       status: 'success',
       data: {
@@ -60,7 +66,11 @@ exports.updateHotel = catchAsync(async (req, res) => {
 
 exports.deleteHotel = catchAsync(async (req, res) => {
   
-    await Hotel.findByIdAndDelete(req.params.id);
+    const hotel = await Hotel.findByIdAndDelete(req.params.id);
+    
+    if (!hotel) {
+      return next(new AppError('No hotel found with that ID', 404))
+    }
 
     res.status(204).json({
       status: 'success',
