@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-const { validate } = require('./hotelModel')
+const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -36,6 +36,18 @@ const userSchema = new mongoose.Schema({
         },
     }
 });
+
+// use document middleware to enable encryption using bcrypt
+userSchema.pre('save', async function (next) {
+    // if the current document's password has not modified, exit the function and call the next middleware
+    if (!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);;
+
+    // remove passwordConfirm field from database
+    this.passwordConfirm = undefined;
+    next();
+})
 
 const User = mongoose.model('User', userSchema)
 
