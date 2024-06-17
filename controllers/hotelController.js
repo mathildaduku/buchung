@@ -1,5 +1,6 @@
 const Hotel = require('../models/hotelModel');
 const APIFeatures = require('../utils/apiFeatures');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createHotel = catchAsync( async (req, res, next) => {
