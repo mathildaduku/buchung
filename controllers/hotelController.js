@@ -14,7 +14,7 @@ exports.createHotel = catchAsync( async (req, res, next) => {
     });
 });
 
-exports.getAllHotels = catchAsync(async (req, res) => {
+exports.getAllHotels = catchAsync(async (req, res, next) => {
   
     const features = new APIFeatures(Hotel.find(), req.query)
       .filter()
@@ -32,7 +32,7 @@ exports.getAllHotels = catchAsync(async (req, res) => {
     });
 });
 
-exports.getHotel = catchAsync(async (req, res) => {
+exports.getHotel = catchAsync(async (req, res, next) => {
   
     const hotel = await Hotel.findById(req.params.id);
 
@@ -47,7 +47,7 @@ exports.getHotel = catchAsync(async (req, res) => {
     });
 });
 
-exports.updateHotel = catchAsync(async (req, res) => {
+exports.updateHotel = catchAsync(async (req, res, next) => {
   
     const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -65,7 +65,7 @@ exports.updateHotel = catchAsync(async (req, res) => {
     });
 });
 
-exports.deleteHotel = catchAsync(async (req, res) => {
+exports.deleteHotel = catchAsync(async (req, res, next) => {
   
     const hotel = await Hotel.findByIdAndDelete(req.params.id);
     
