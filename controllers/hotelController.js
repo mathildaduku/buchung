@@ -1,8 +1,8 @@
 const Hotel = require('../models/hotelModel');
 const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
 
-exports.createHotel = async (req, res) => {
-  try {
+exports.createHotel = catchAsync( async (req, res, next) => {
     const newHotel = await Hotel.create(req.body);
 
     res.status(201).json({
@@ -11,16 +11,10 @@ exports.createHotel = async (req, res) => {
         hotel: newHotel,
       },
     });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+});
 
-exports.getAllHotels = async (req, res) => {
-  try {
+exports.getAllHotels = catchAsync(async (req, res) => {
+  
     const features = new APIFeatures(Hotel.find(), req.query)
       .filter()
       .sort()
@@ -35,16 +29,10 @@ exports.getAllHotels = async (req, res) => {
         hotels,
       },
     });
-  } catch (err) {
-    res.status(404).json({
-      status: 'Fail',
-      message: err.message,
-    });
-  }
-};
+});
 
-exports.getHotel = async (req, res) => {
-  try {
+exports.getHotel = catchAsync(async (req, res) => {
+  
     const hotel = await Hotel.findById(req.params.id);
 
     res.status(200).json({
@@ -53,16 +41,10 @@ exports.getHotel = async (req, res) => {
         hotel,
       },
     });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+});
 
-exports.updateHotel = async (req, res) => {
-  try {
+exports.updateHotel = catchAsync(async (req, res) => {
+  
     const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -74,28 +56,16 @@ exports.updateHotel = async (req, res) => {
         hotel,
       },
     });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+});
 
-exports.deleteHotel = async (req, res) => {
-  try {
+exports.deleteHotel = catchAsync(async (req, res) => {
+  
     await Hotel.findByIdAndDelete(req.params.id);
 
     res.status(204).json({
       status: 'success',
       data: null,
     });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err.message,
-    });
-  }
-};
+});
 
 exports.updateHotel;
