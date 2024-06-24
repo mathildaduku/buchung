@@ -24,11 +24,11 @@ const hotelSchema = new mongoose.Schema({
     required: [true, 'Please specify the city where the hotel is located.'],
     trim: true,
   },
-  country: {
-    type: String,
-    required: [true, 'Please specify the country where the hotel is situated.'],
-    trim: true,
-  },
+  // country: {
+  //   type: String,
+  //   required: [true, 'Please specify the country where the hotel is situated.'],
+  //   trim: true,
+  // },
   starRating: {
     type: Number,
     min: [1, 'Rating must be at least 1'],
@@ -41,8 +41,18 @@ const hotelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  //   rooms: [roomSchema],
-  //   reviews: [reviewsSchema]
+  rooms: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Room',
+    },
+  ],
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Review',
+    },
+  ],
 });
 
 // create model from schema
