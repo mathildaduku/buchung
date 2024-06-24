@@ -19,10 +19,10 @@ const roomSchema = new mongoose.Schema({
     ref: 'Hotel',
     required: true,
   },  
-  bookings: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Booking',
-  },
+  // bookings: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Booking',
+  // },
   createdAt: {
     type: Date,
     default: Date.now,

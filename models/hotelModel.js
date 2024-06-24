@@ -41,18 +41,18 @@ const hotelSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  rooms: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Room',
-    },
-  ],
-  reviews: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Review',
-    },
-  ],
+  // rooms: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Room',
+  //   },
+  // ],
+  // reviews: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Review',
+  //   },
+  // ],
 });
 
 // create model from schema
