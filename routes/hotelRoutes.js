@@ -6,12 +6,24 @@ const router = express.Router();
 router
   .route('/')
   .get(hotelController.getAllHotels)
-  .post(authController.protect, authController.restrictTo('admin'), hotelController.createHotel);
+  .post(
+    authController.protect,
+    authController.restrictTo('admin'),
+    hotelController.createHotel,
+  );
 
 router
   .route('/:id')
   .get(hotelController.getHotel)
-  .patch(authController.protect, authController.restrictTo('admin'), hotelController.updateHotel)
-  .delete(authController.protect, authController.restrictTo('admin'), hotelController.deleteHotel);
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    hotelController.updateHotel,
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    hotelController.deleteHotel,
+  );
 
 module.exports = router;

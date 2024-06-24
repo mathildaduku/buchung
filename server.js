@@ -4,10 +4,10 @@ const app = require('./app');
 
 // listen for uncaughtException events from synchronous code errors
 process.on('uncaughtException', (err) => {
-  console.log('UNCAUGHT EXCEPTION! SHUTTING DOWN.....')
+  console.log('UNCAUGHT EXCEPTION! SHUTTING DOWN.....');
   console.log(err.name, err.message);
-  process.exit(1)
-})
+  process.exit(1);
+});
 
 dotenv.config({ path: './config.env' });
 
@@ -29,9 +29,9 @@ const server = app.listen(port, () => {
 // listen for unhandledRejection events from asybchronous code errors
 process.on('unhandledRejection', (err) => {
   console.log(err.name, err.message);
-  console.log('UNHANDLED REJECTION! SHUTTING DOWN...')
+  console.log('UNHANDLED REJECTION! SHUTTING DOWN...');
 
   server.close(() => {
     process.exit(1);
   });
-})
+});
