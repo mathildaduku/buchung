@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const roomSchema = new mongoose.Schema({
   room_type: {
@@ -18,15 +18,20 @@ const roomSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Hotel',
     required: true,
-  },  
-  // bookings: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Booking',
-  // },
+  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
+});
+
+// when room are searched for, populate the hotel name also
+roomSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'hotel',
+    select: 'name',
+  });
+  next();
 });
 
 const Room = mongoose.model('Room', roomSchema);
