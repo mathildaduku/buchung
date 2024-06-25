@@ -4,7 +4,7 @@ const Room = require('../models/roomModel');
 exports.getAllRooms = catchAsync(async (req, res, next) => {
   const rooms = await Room.find();
 
-  res.status(201).json({
+  res.status(200).json({
     status: 'Success',
     results: rooms.length,
     data: {
