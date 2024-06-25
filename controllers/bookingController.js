@@ -13,7 +13,7 @@ exports.createBooking = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getBookings = catchAsync(async (req, res, next) => {
+exports.getAllBookings = catchAsync(async (req, res, next) => {
   const bookings = await Booking.find();
 
   res.status(200).json({
@@ -21,6 +21,20 @@ exports.getBookings = catchAsync(async (req, res, next) => {
     results: bookings.length,
     data: {
       bookings,
+    },
+  });
+});
+
+exports.getBooking = catchAsync(async (req, res, next) => {
+  const booking = await Booking.findById(req.params.id);
+
+  if (!booking) {
+    return next(new AppError('No booking found with that ID', 404));
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      booking,
     },
   });
 });

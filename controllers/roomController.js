@@ -24,3 +24,17 @@ exports.createRoom = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getRoom = catchAsync(async (req, res, next) => {
+  const room = await Room.findById(req.params.id);
+
+  if (!room) {
+    return next(new AppError('No room found with that ID', 404));
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      room,
+    },
+  });
+});
