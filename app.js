@@ -22,7 +22,7 @@ app.use('/api/v1/hotels', hotelRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/rooms', roomRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/booings', bookingRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 // Handler for undefined routes
 app.all('*', (req, res, next) => {

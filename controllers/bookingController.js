@@ -16,7 +16,7 @@ exports.createBooking = catchAsync(async (req, res, next) => {
 exports.getBookings = catchAsync(async (req, res, next) => {
   const bookings = await Booking.find();
 
-  res.status(201).json({
+  res.status(200).json({
     status: 'Success',
     results: bookings.length,
     data: {
