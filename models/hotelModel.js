@@ -32,7 +32,7 @@ const hotelSchema = new mongoose.Schema({
   starRating: {
     type: Number,
     min: [1, 'Rating must be at least 1'],
-    max: [5, 'Rating must be at most 5']
+    max: [5, 'Rating must be at most 5'],
   },
   imageUrl: {
     type: String,
@@ -53,7 +53,19 @@ const hotelSchema = new mongoose.Schema({
   //     ref: 'Review',
   //   },
   // ],
+},
+// ensure that virtual properties are included when the document is converted to JSON or a plain JavaScript object.
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+},);
+// create a virtual rooms field on hotel schema to populate rooms property on hotels model when queried without storing long array of room ids in database
+hotelSchema.virtual('rooms', {
+  ref: 'Room',
+  foreignField: 'hotel',
+  localField: '_id',
 });
+
 
 // create model from schema
 const Hotel = mongoose.model('Hotel', hotelSchema);
