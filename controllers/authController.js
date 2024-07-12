@@ -42,7 +42,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   // check if email and password exist in the input field
   if (!email || !password) {
-    return next(new AppError('Please provide email and password!, 400'));
+    return next(new AppError('Please provide email and password!', 400));
   }
 
   // find document that contains the email and modifies the query to include the password field in the returned document
@@ -178,7 +178,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError('Your current password is wrong.', 401));
   }
-  
+
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
