@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 // use document middleware to enable encryption using bcrypt
@@ -50,6 +55,12 @@ userSchema.pre('save', async function (next) {
 
   // remove passwordConfirm field from database
   this.passwordConfirm = undefined;
+  next();
+});
+
+// use query middleware to make sure any find query on the userSchema only returns documents where the active field is not false
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: { $ne: false } });
   next();
 });
 

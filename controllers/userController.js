@@ -4,13 +4,13 @@ const catchAsync = require('../utils/catchAsync');
 
 // will take in an object and the remaining parameters for the allowed fields and this will create an array containing all the arguments we passed in after the first one(obj)
 const filterObj = (obj, ...allowedFields) => {
-    const newObj = {};
-    // loop through the object and for each element check if its one of the allowed fields and if it is simply add it to the new object that we are going to return in the end.
-    Object.keys(obj).forEach((el) => {
-        if (allowedFields.includes(el)) newObj[el] = obj[el];
-    })
-    return newObj;
-}
+  const newObj = {};
+  // loop through the object and for each element check if its one of the allowed fields and if it is simply add it to the new object that we are going to return in the end.
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
 
@@ -48,5 +48,15 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     data: {
       user: updatedUser,
     },
+  });
+});
+
+// Set user to inactive instead of completely deleting from the database
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user.id, { active: false });
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
   });
 });
