@@ -2,7 +2,14 @@ const catchAsync = require('../utils/catchAsync');
 const Review = require('../models/reviewModel');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  // Initialize an empty filter object
+  let filter = {};
+
+  // If hotelId is present in the request parameters, add it to the filter
+  if (req.params.hotelId) filter = { hotel: req.params.hotelId };
+
+  // Find reviews based on the filter (either all reviews or reviews for a specific hotel)
+  const reviews = await Review.find(filter);
 
   res.status(200).json({
     status: 'Success',
@@ -14,9 +21,9 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
-// If the hotel ID is not present in the request body, set it to the hotel ID from the route parameters.
+  // If the hotel ID is not present in the request body, set it to the hotel ID from the route parameters.
   if (!req.body.hotel) req.body.hotel = req.params.hotelId;
-// If the user ID is not present in the request body, set it to the ID of the currently authenticated user.
+  // If the user ID is not present in the request body, set it to the ID of the currently authenticated user.
   if (!req.body.user) req.body.user = req.user.id;
   const newReview = await Review.create(req.body);
 
