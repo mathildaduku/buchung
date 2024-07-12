@@ -169,5 +169,5 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // Update changedPaswordAt property for the user by adding a pre save document middleware to the user model ---- p.s already done in the user model
 
   // Log the user in, send JWT
-  createSendToken(newUser, 201, res);
+  createSendToken(user, 200, res);
 });
