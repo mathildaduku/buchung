@@ -16,6 +16,7 @@ router.patch(
   authController.updatePassword,
 );
 
+router.patch('/updateMe', authController.protect, userController.updateMe);
 router.get('/', userController.getAllUsers);
 
 module.exports = router;
