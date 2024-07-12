@@ -14,6 +14,10 @@ exports.getAllReviews = catchAsync(async (req, res, next) => {
 });
 
 exports.createReview = catchAsync(async (req, res, next) => {
+// If the hotel ID is not present in the request body, set it to the hotel ID from the route parameters.
+  if (!req.body.hotel) req.body.hotel = req.params.hotelId;
+// If the user ID is not present in the request body, set it to the ID of the currently authenticated user.
+  if (!req.body.user) req.body.user = req.user.id;
   const newReview = await Review.create(req.body);
 
   res.status(201).json({
