@@ -6,13 +6,29 @@ const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
-  .get(bookingController.getAllBookings)
+  .get(authController.protect, bookingController.getAllBookings)
   .post(
     authController.protect,
     authController.restrictTo('user'),
     bookingController.createBooking,
   );
 
-router.route('/:id').get(bookingController.getBooking);
+router
+  .route('/:id')
+  .get(
+    authController.protect,
+    authController.restrictTo('user'),
+    bookingController.getBooking,
+  )
+  .patch(
+    authController.protect,
+    authController.restrictTo('user'),
+    bookingController.updateBooking,
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('user'),
+    bookingController.deleteBooking,
+  );
 
 module.exports = router;

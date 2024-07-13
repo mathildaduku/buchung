@@ -78,4 +78,3 @@ exports.deleteHotel = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateHotel;

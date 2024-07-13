@@ -13,5 +13,14 @@ router
     roomController.createRoom,
   );
 
-router.route('/:id').get(roomController.getRoom);
+router.route('/:id').get(roomController.getRoom).patch(
+  authController.protect,
+  authController.restrictTo('admin'),
+  roomController.updateRoom,
+)
+.delete(
+  authController.protect,
+  authController.restrictTo('admin'),
+  roomController.deleteRoom,
+);
 module.exports = router;
