@@ -2,7 +2,10 @@ const catchAsync = require('../utils/catchAsync');
 const Room = require('../models/roomModel');
 
 exports.getAllRooms = catchAsync(async (req, res, next) => {
-  const rooms = await Room.find();
+  let filter = {};
+  if (req.params.hotelId) filter = { hotel: req.params.hotelId };
+
+  const rooms = await Room.find(filter);
 
   res.status(200).json({
     status: 'Success',
@@ -14,6 +17,12 @@ exports.getAllRooms = catchAsync(async (req, res, next) => {
 });
 
 exports.createRoom = catchAsync(async (req, res, next) => {
+  // If the hotel ID is not present in the request body, set it to the hotel ID from the route parameters.
+  if (!req.body.hotel) req.body.hotel = req.params.hotelId;
+
+  // If the user ID is not present in the request body, set it to the ID of the currently authenticated user.
+  if (!req.body.user) req.body.user = req.user.id;
+
   const newRoom = await Room.create(req.body);
 
   res.status(201).json({
