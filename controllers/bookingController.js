@@ -2,6 +2,8 @@ const catchAsync = require('../utils/catchAsync');
 const Booking = require('../models/bookingModel');
 
 exports.createBooking = catchAsync(async (req, res, next) => {
+  if (!req.body.user) req.body.user = req.params.userId
+
   const newBooking = await Booking.create(req.body);
 
   res.status(201).json({
@@ -14,7 +16,10 @@ exports.createBooking = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {
-  const bookings = await Booking.find();
+  let filter = {};
+  if (req.params.userId) filter = { user: req.params.userId };
+
+  const bookings = await Booking.find(filter);
 
   res.status(200).json({
     status: 'Success',
